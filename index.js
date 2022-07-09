@@ -1,20 +1,20 @@
 import "dotenv/config";
-import pkg, { Pool } from "pg";
+import pkg from "pg";
 
-const { Client } = pkg;
+const { Pool } = pkg;
 
-//await connectDB();
+await connectDB();
 
 //
 
 async function connectDB() {
-  const client = new Client({
+  const pool = new Pool({
     connectionString: process.env.DB_CONNECTIONSTRING,
   });
-  await client.connect();
-  const res = await client.query("SELECT * FROM person");
+  await pool.connect();
+  const res = await pool.query("SELECT * FROM person");
   res.rows.forEach((person) => console.log(person));
-  await client.end();
+  await pool.end();
 }
 export default connectDB;
 
